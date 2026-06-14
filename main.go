@@ -257,18 +257,31 @@ func main() {
 
 	// sorting by win rate, compares the index using >
 	sort.Slice(rates.Rates.Rates, func(i, j int) bool {
-		return rates.Rates.Rates[i].Cells.Winrate > rates.Rates.Rates[j].Cells.Winrate
+		// sort.slice returns 2 indexes so we compare
+		var roleI string = rates.Rates.Rates[i].Hero.Role
+		var roleJ string = rates.Rates.Rates[j].Hero.Role
+
+		// if the roles are the same, then sort by winrate
+		if roleI == roleJ {
+			return rates.Rates.Rates[i].Cells.Winrate > rates.Rates.Rates[j].Cells.Winrate
+		}
+
+		return roleI < roleJ
 	})
 
+	// init the role string so we can compare later
+	var currentRole string = ""
+
 	for _, item := range rates.Rates.Rates {
-		heroName := item.Cells.Name
-		heroWinRate := item.Cells.Winrate
-		heroPickRate := item.Cells.Pickrate
+		// checking if the role of the hero is different then if it is, swap the header
+		if item.Hero.Role != currentRole {
+			currentRole = item.Hero.Role
+			fmt.Println("====", currentRole, "====")
+		}
 
-		fmt.Println(heroName)
-		fmt.Printf("Win Rate: %v \n", heroWinRate)
-		fmt.Printf("Pick Rate: %v \n\n", heroPickRate)
+		fmt.Println(item.Cells.Name)
+		fmt.Printf("Win Rate: %v\n", item.Cells.Winrate)
+		fmt.Printf("Pick Rate: %v\n\n", item.Cells.Pickrate)
 	}
-
 	fmt.Scanln()
 }
