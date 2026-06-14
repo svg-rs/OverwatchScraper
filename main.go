@@ -255,18 +255,18 @@ func main() {
 		log.Fatalf("Parsing failed: %v", err)
 	}
 
+	// sorting by win rate, compares the index using >
+	sort.Slice(rates.Rates.Rates, func(i, j int) bool {
+		return rates.Rates.Rates[i].Cells.Winrate > rates.Rates.Rates[j].Cells.Winrate
+	})
+
 	for _, item := range rates.Rates.Rates {
 		heroName := item.Cells.Name
 		heroWinRate := item.Cells.Winrate
 		heroPickRate := item.Cells.Pickrate
 
-		// sorting by win rate, compares the index using >
-		sort.Slice(rates.Rates.Rates, func(i, j int) bool {
-			return rates.Rates.Rates[i].Cells.Winrate > rates.Rates.Rates[j].Cells.Winrate
-		})
-
 		fmt.Println(heroName)
-		fmt.Printf("Win Rate: %v \n\n", heroWinRate)
+		fmt.Printf("Win Rate: %v \n", heroWinRate)
 		fmt.Printf("Pick Rate: %v \n\n", heroPickRate)
 	}
 
