@@ -266,6 +266,7 @@ func main() {
 			return rates.Rates.Rates[i].Cells.Winrate > rates.Rates.Rates[j].Cells.Winrate
 		}
 
+		// if the roles are not the same, sort the roles alphabeticaly
 		return roleI < roleJ
 	})
 
